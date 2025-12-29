@@ -3,9 +3,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 import cors from 'cors';
 import connectDB from './config/db.js';
+import articleRoutes from './routes/article.routes.js';
 // import chatRoutes from './routes/chatRoutes.js';
-
-
 
 
 const app = express();
@@ -16,5 +15,8 @@ app.use(express.json());
 console.log(`mongodb uri: ${process.env.MONGODB_URI}`);
 
 connectDB();
+
+
+app.use("/articles", articleRoutes);
 
 export default app;

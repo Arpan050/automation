@@ -1,29 +1,34 @@
-import { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const articleSchema = new Schema(
-    {
-        title: {type: String,
-            required: true,
-        },
-        OriginalContent: {
-            type: String,
-            required: true,
-        },
-        updatedContent:{
-            type: String,
-            required: true,
-        },
-        sourceUrl:{
-            type: String,
-            required: true,
-        },
-        reference:{
-            type: [String],
-            default:[],
-        },
-
+const articleSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    {timestamps: true}
+
+    originalContent: {
+      type: String,
+      required: true,
+    },
+
+    updatedContent: {
+      type: String,
+      default: null,
+    },
+
+    sourceUrl: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    references: {
+      type: [String],
+      default: [],
+    },
+  },
+  { timestamps: true }
 );
 
 const Article = mongoose.model("Article", articleSchema);
