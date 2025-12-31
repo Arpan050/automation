@@ -8,7 +8,7 @@ export default function App() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [revealedId, setRevealedId] = useState(null);
+  // const [revealedId, setRevealedId] = useState(null);
 
 
   const fetchArticles = async () => {
@@ -62,7 +62,7 @@ const handleUpdateArticle = async (id) => {
             key={article._id}
             article={article}
             onUpdate={handleUpdateArticle}
-            revealed={revealedId === article._id}
+            // revealed={revealedId === article._id}
           />
 
         ))}

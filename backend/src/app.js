@@ -1,24 +1,23 @@
-import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
-import cors from 'cors';
-import mongoose from 'mongoose';
-import connectDB from './config/db.js';
-import articleRoutes from './routes/article.routes.js';
-// import chatRoutes from './routes/chatRoutes.js';
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.js";
+import articleRoutes from "./routes/article.routes.js";
 
+dotenv.config();
 
 const app = express();
 
-app.use(cors({
-    origin: 'https://automation-rosy.vercel.app/', 
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:5173",
+    "https://automation-rosy.vercel.app",]
+  })
+);
+
 app.use(express.json());
 
-console.log(`mongodb uri: ${process.env.MONGODB_URI}`);
-
 connectDB();
-
 
 app.use("/articles", articleRoutes);
 
