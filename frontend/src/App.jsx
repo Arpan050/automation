@@ -34,7 +34,7 @@ export default function App() {
 const handleUpdateArticle = async (id) => {
   try {
     const res = await fetch(
-      `http://automation-c0ds.onrender.com/articles/${id}/update`,
+      `https://automation-c0ds.onrender.com/articles/${id}/update`,
       { method: "POST" }
     );
 
