@@ -11,19 +11,20 @@ The system is intentionally simple, backend-driven, and production-structured.
 
 **Tech Stack**
 
-> Backend
-> Node.js
-> Express.js
-> MongoDB (Mongoose)
-> Cheerio (HTML parsing)
-> SERPER
-> Axios
-> Groq LLM API 
-> dotenv
-> Frontend
-> React (Vite)
-> Fetch API
-> Plain CSS (no UI libraries)
+** Backend**
+*Node.js,
+*Express.js,
+*MongoDB (Mongoose)
+*Cheerio (HTML parsing)
+*SERPER
+*Axios
+*Groq LLM API 
+*dotenv
+
+**Frontend**
+*React (Vite)
+*Fetch API
+*Plain CSS (no UI libraries)
 
 
 
