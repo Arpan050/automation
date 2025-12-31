@@ -11,66 +11,66 @@ The system is intentionally simple, backend-driven, and production-structured.
 
 **Tech Stack**
 
-** Backend**
-*Node.js,
-*Express.js,
-*MongoDB (Mongoose)
-*Cheerio (HTML parsing)
-*SERPER
-*Axios
-*Groq LLM API 
-*dotenv
+**Backend**
+* Node.js,
+* Express.js,
+* MongoDB (Mongoose)
+* Cheerio (HTML parsing)
+* SERPER
+* Axios
+* Groq LLM API 
+* dotenv
 
 **Frontend**
-*React (Vite)
-*Fetch API
-*Plain CSS (no UI libraries)
+* React (Vite)
+* Fetch API
+* Plain CSS (no UI libraries)
 
 
 
 **Features**
 
-<!--------------------- Phase 1 – Scraping -------------------------->
+Phase 1 – Scraping
 
->Automatically finds the last pagination page
->Scrapes the oldest 5 articles
->Extracts:
-  > Title
-  > Main article content
-  > Source URL
-
-{Extraction is already done and stored in DataBase}
-
-<!--------------------- Phase 2 – Content Update --------------------->
-
-> Uses LLM to regenerate article content
-> Updates can be triggered multiple times
-> Each update overwrites the previous version
-> Updated content is stored in MongoDB
+* Automatically finds the last pagination page
+* Scrapes the oldest 5 articles
+* Extracts:
+  - Title
+  - Main article content
+  - Source URL 
+(Extraction is already done and stored in DataBase)
 
 
+Phase 2 – Content Update
+
+* Uses LLM to regenerate article content
+* Updates can be triggered multiple times
+* Each update overwrites the previous version
+* Updated content is stored in MongoDB
 
 
 
-<!-------------------------- Frontend ---------------------------->
-
-**Displays:**
-
-> Original content
-> Updated content (if exists)
-> References (if any)
-
-**“Update Article” button:**
-
-> Always enabled
-> Regenerates content on every click
-> Reflects latest DB state instantly
 
 
+**Frontend**
 
-<!------------------------- Project Structure ------------------------->
+Displays:
 
-**Backend**
+* Original content
+* Updated content (if exists)
+* References (if any)
+
+Update Article” button:
+
+* Always enabled
+* Regenerates content on every click
+* Reflects latest DB state instantly
+
+
+
+**Project Structure**
+
+Backend:
 
 backend/
 ├── src/
@@ -94,7 +94,8 @@ backend/
 
 
 
-**Frontend**
+Frontend:
+
 frontend/
 ├── src/
 │   ├── components/
@@ -111,32 +112,33 @@ frontend/
 
 **Environment Variables**
 
-<!-------------- Create a .env file in backend/: --------------->
+* Create a .env file in backend
 
-PORT=8000
-MONGODB_URI=your_mongodb_connection_string
-GROQ_API_KEY=your_groq_api_key
-SERPER_API_KEY=your_serper_api_key
+- PORT=8000
+- MONGODB_URI=your_mongodb_connection_string
+- GROQ_API_KEY=your_groq_api_key
+- SERPER_API_KEY=your_serper_api_key
 
 
 
 **Running the Project**
-**Backend**
 
-cd backend
-npm install
-npm run dev
+Backend
+
+- cd backend
+- npm install
+- npm run dev
 
 
 **Server runs on:**
 
 http://localhost:8000
 
-**Frontend**
+* Frontend
 
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
 
 **Frontend runs on:**
