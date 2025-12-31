@@ -24,12 +24,9 @@ export async function generateUpdatedContent(originalContent) {
 
     const text = completion?.choices?.[0]?.message?.content?.trim();
 
-    // ✅ SUCCESS PATH
     if (text && text.length > 50) {
       return text;
     }
-
-    // ❌ FALLBACK (THIS IS IMPORTANT)
     return `
 [Auto-updated content]
 
@@ -38,7 +35,6 @@ ${originalContent.slice(0, 3000)}
 (Note: This article was updated using a fallback generator due to LLM limits.)
 `;
   } catch (err) {
-    // ❌ HARD FAIL SAFE
     return `
 [Auto-updated content]
 
