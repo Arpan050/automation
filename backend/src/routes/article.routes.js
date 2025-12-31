@@ -1,18 +1,19 @@
 import express from "express";
 import {
-  scrapeArticles,
-  getAllArticles,
-  getArticleById,
+  scrapeAndSaveArticles,
   updateArticle,
-  deleteArticle,
 } from "../controllers/article.controller.js";
+import Article from "../models/Article.js";
 
 const router = express.Router();
 
-router.post("/scrape", scrapeArticles);
-router.get("/", getAllArticles);
-router.get("/:id", getArticleById);
-router.put("/:id", updateArticle);
-router.delete("/:id", deleteArticle);
+router.post("/scrape", scrapeAndSaveArticles);
+
+router.get("/", async (req, res) => {
+  const articles = await Article.find();
+  res.json(articles);
+});
+
+router.post("/:id/update", updateArticle);
 
 export default router;

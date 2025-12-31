@@ -1,107 +1,59 @@
 import Article from "../models/Article.js";
 import { scrapeOldestArticles } from "../services/scraper.service.js";
+import { generateUpdatedContent } from "../services/llm.service.js";
 
-
-// POST /articles/scrape
-// Scrape and store oldest 5 articles
-
-export const scrapeArticles = async (req, res) => {
+export const scrapeAndSaveArticles = async (req, res) => {
   try {
     const scrapedArticles = await scrapeOldestArticles();
 
+    if (!scrapedArticles.length) {
+      return res.status(200).json({ message: "No articles scraped" });
+    }
+
     const savedArticles = [];
 
-    for (const item of scrapedArticles) {
-      const exists = await Article.findOne({ sourceUrl: item.sourceUrl });
+    for (const a of scrapedArticles) {
+      const exists = await Article.findOne({ sourceUrl: a.sourceUrl });
       if (exists) continue;
 
       const article = await Article.create({
-        title: item.title,
-        originalContent: item.content,
-        sourceUrl: item.sourceUrl,
+        title: a.title,
+        originalContent: a.content,
+        updatedContent: null,
+        references: [],
+        sourceUrl: a.sourceUrl,
       });
 
       savedArticles.push(article);
     }
 
-    res.status(201).json({
-      message: "Scraping completed",
+    return res.json({
+      message: "Scraped and saved",
       count: savedArticles.length,
       articles: savedArticles,
     });
-  } catch (error) {
-    res.status(500).json({
-      message: "Scraping failed",
-      error: error.message,
-    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };
 
-
-// GET /articles
-
-export const getAllArticles = async (req, res) => {
-  try {
-    const articles = await Article.find().sort({ createdAt: 1 });
-    res.json(articles);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-
-// GET /articles/:id
-
-export const getArticleById = async (req, res) => {
-  try {
-    const article = await Article.findById(req.params.id);
-    if (!article) {
-      return res.status(404).json({ message: "Article not found" });
-    }
-    res.json(article);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-
-// PUT /articles/:id
-// Used later by automation to store updated content
 
 export const updateArticle = async (req, res) => {
-  try {
-    const { updatedContent, references } = req.body;
+  const { id } = req.params;
 
-    const article = await Article.findByIdAndUpdate(
-      req.params.id,
-      {
-        updatedContent,
-        references,
-      },
-      { new: true }
-    );
-
-    if (!article) {
-      return res.status(404).json({ message: "Article not found" });
-    }
-
-    res.json(article);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const article = await Article.findById(id);
+  if (!article) {
+    return res.status(404).json({ message: "Article not found" });
   }
-};
 
+  const updatedText = await generateUpdatedContent(article.originalContent);
 
-// DELETE /articles/:id
- 
-export const deleteArticle = async (req, res) => {
-  try {
-    const article = await Article.findByIdAndDelete(req.params.id);
-    if (!article) {
-      return res.status(404).json({ message: "Article not found" });
-    }
-    res.json({ message: "Article deleted" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  article.updatedContent = updatedText;
+  article.updatedAt = new Date();
+  await article.save();
+
+  res.json({
+    message: "Article updated",
+    article,
+  });
 };
