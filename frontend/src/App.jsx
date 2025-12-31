@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ArticleCard from "./components/ArticleCard.jsx";
 import "./styles/app.css";
 
-const API_URL = "http://localhost:8000/articles";
+const API_URL = "https://automation-c0ds.onrender.com/articles";
 
 export default function App() {
   const [articles, setArticles] = useState([]);
@@ -34,7 +34,7 @@ export default function App() {
 const handleUpdateArticle = async (id) => {
   try {
     const res = await fetch(
-      `http://localhost:8000/articles/${id}/update`,
+      `http://automation-c0ds.onrender.com/articles/${id}/update`,
       { method: "POST" }
     );
 
