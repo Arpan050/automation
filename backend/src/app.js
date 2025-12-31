@@ -10,7 +10,9 @@ import articleRoutes from './routes/article.routes.js';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'https://automation-rosy.vercel.app/', 
+}));
 app.use(express.json());
 
 console.log(`mongodb uri: ${process.env.MONGODB_URI}`);
